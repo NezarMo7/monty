@@ -8,6 +8,7 @@ global_t *interpreter;
  * @argv: pointers to arguments array
  * Return: EXIT_SUCCESS on success, EXIT_FAILURE on error
  */
+
 int main(int argc, char **argv)
 {
 	FILE *monty_file;
@@ -23,18 +24,23 @@ int main(int argc, char **argv)
 		fprintf(stderr, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
+
 	monty_file = fopen(argv[1], "r");
 	if (monty_file == NULL)
 	{
 		fprintf(stderr, "Error: Can't open file %s\n", argv[1]);
 		exit(EXIT_FAILURE);
 	}
+
 	interpreter->file = monty_file;
+	interpreter->mode = 1;
 	while ((read = getline(&lineptr, &len, monty_file)) != -1)
 	{
+
 		interpreter->line_number = ++line_number;
 		if (read > 1)
-		{		interpreter->line = strtok(lineptr, "\t\n");
+		{
+			interpreter->line = strtok(lineptr, "\t\n");
 
 			interprete_line(&stack);
 		}
@@ -46,30 +52,33 @@ int main(int argc, char **argv)
 	free(interpreter);
 	return (0);
 }
+
 /**
  * interprete_line - Monty Interpreter.
  * @stack: pointers to the stack.
  * Return: 0 on success, -1 on error.
  */
+
 int interprete_line(stack_t **stack)
 {
 	int i = 0;
 	instruction_t monty_opcode[] = {
-		{"push", push},
-		{"pall", pall},
-		{"pint", pint},
-		{"pop", pop},
-		{"swap", swap},
-		{"add", add},
-		{"nop", nop},
-		{NULL, NULL}};
+		{"push", push}, {"pall", pall}, {"pint", pint},
+		{"pop", pop}, {"swap", swap}, {"add", add},
+		{"nop", nop}, {"sub", sub}, {"div", divtion},
+		{"mul", mul}, {"mod", mod}, {"pchar", pchar},
+		{"pstr", pstr}, {"stack", _stack}, {"queue", _queue},
+		{"rotl", rotl}, {"rotr", rotr}, {NULL, NULL}};
+
 	char *opcode;
 	char *intger;
-opcode = strtok(interpreter->line, " ");
-	if (!opcode)
+
+	opcode = strtok(interpreter->line, " ");
+	if (!opcode || opcode[0] == '#')
 		return (0);
 	intger = strtok(NULL, " ");
 	interpreter->intger = intger;
+
 	while (monty_opcode[i].opcode && opcode != NULL)
 	{
 		if (strcmp(opcode, monty_opcode[i].opcode) == 0)
