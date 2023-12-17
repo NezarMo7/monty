@@ -17,8 +17,9 @@ void add(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 	(*stack)->next->n += (*stack)->n;
-		pop(stack, line_number);
+	pop(stack, line_number);
 }
+
 /**
  * sub - subtracts the top element from the second top element of the stack
  * @stack: the head of the linked list in stack
@@ -106,6 +107,7 @@ void mul(stack_t **stack, unsigned int line_number)
 	*stack = temp->next;
 	free(temp);
 }
+
 /**
  * mod - computes the rest of the division of the second top element of
  *  the stack by the top element of the stack.

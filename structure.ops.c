@@ -21,6 +21,7 @@ void swap(stack_t **stack, unsigned int line_number)
 	temp->n = temp->next->n;
 	temp->next->n = tmp;
 }
+
 /**
  * rotl - rotates the stack to the top
  * @stack: the head of the linked list in stack
