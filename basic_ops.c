@@ -45,6 +45,12 @@ void push(stack_t **stack, unsigned int line_number)
 		*head = new;
 		return;
 	}
+	if (interpreter->mode)
+	{
+		new->next = (*head);
+		new->next->prev = new;
+		*head = new;
+	}
 	else
 	{
 		tail = *head;
